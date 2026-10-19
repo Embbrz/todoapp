@@ -1,6 +1,7 @@
 package com.app.todoapp.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,17 @@ public class TaskService {
 		return taskRepo.findAll();
 		
 		
+	}
+	public void toggleTask(Long id) {
+		Task task = taskRepo.findById(id)
+		        .orElseThrow(() -> new IllegalArgumentException("Invalid Task id"));
+		task.setCompleted(!(task.isCompleted()));
+		taskRepo.save(task);
+		
+		
+	}
+	public void deleteTask(Long id) {
+		taskRepo.deleteById(id);
 	}
 	
 	public void createTask(String title) {
